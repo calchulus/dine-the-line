@@ -21,7 +21,16 @@
 
 // Enter the path that the oauth library is in relation to the php file
 require_once('lib/OAuth.php');
-require_once('lib/config.php');
+
+// Set your OAuth credentials here
+// These credentials can be obtained from the 'Manage API Access' page in the
+// developers documentation (http://www.yelp.com/developers)
+$CONSUMER_KEY = NULL;
+$CONSUMER_SECRET = NULL;
+$TOKEN = NULL;
+$TOKEN_SECRET = NULL;
+
+require_once('lib/credentials.php');
 
 $API_HOST = 'api.yelp.com';
 $DEFAULT_TERM = 'dinner';
