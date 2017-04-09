@@ -1,84 +1,35 @@
-'use strict';
-
+var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var path = require('path');
-var ENV = process.env.npm_lifecycle_event;
-var isProd = ENV === 'build';
 
-module.exports = (function makeWebpackConfig () {
-  var config = {};
-
-  config.entry = {
-    app: './src/app/app.js'
-  };
-
-  config.output = {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: isProd ? '/' : 'http://localhost:8080/',
-    filename: isProd ? '[name].[hash].js' : '[name].bundle.js',
-    chunkFilename: isProd ? '[name].[hash].js' : '[name].bundle.js'
-  };
-
-  if (isProd) {
-    config.devtool = 'source-map';
-  } else {
-    config.devtool = 'eval-source-map';
-  }
-
-  config.resolve = {
-    modulesDirectories: [
-      'node_modules',
-      'src/public/views',
-      'lib'
+module.exports = {
+  devtool: 'source-map',
+  entry: {},
+  module: {
+    loaders: [
+       { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
+       { test: /\.html$/, loader: 'raw' },
+       { test: /\.(scss|sass)$/, loader: 'style!css!sass' },
+       { test: /\.css$/, loader: 'style!css' }
     ]
-  };
-
-  config.module = {
-    preLoaders: [],
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['ng-annotate', 'babel'],
-      exclude: /node_modules/
-    }, {
-      test: /\.scss$/,
-      loaders: ['style', 'css', 'sass']
-    }, {
-      test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
-      loader: 'file'
-    }, {
-      test: /\.html$/,
-      loader: 'ngtemplate?relativeTo=' + (path.resolve(__dirname, './src')) + '/!html',
-      exclude: /index\.html/
-    }]
-  };
-
-  config.plugins = [];
-
-  config.plugins.push(
+  },
+  plugins: [
+    // Injects bundles in your index.html instead of wiring all manually.
+    // It also adds hash to all injected assets so we don't have problems
+    // with cache purging during deployment.
     new HtmlWebpackPlugin({
-      template: './src/public/views/index.html',
-      inject: 'body'
+      template: 'client/index.html',
+      inject: 'body',
+      hash: true
+    }),
+
+    // Automatically move all modules defined outside of application directory to vendor bundle.
+    // If you are using more complicated project structure, consider to specify common chunks manually.
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module, count) {
+        return module.resource && module.resource.indexOf(path.resolve(__dirname, 'client')) === -1;
+      }
     })
-  );
-
-  if (isProd) {
-    config.plugins.push(
-      new webpack.NoErrorsPlugin(),
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin(),
-      new CopyWebpackPlugin([{
-        from: path.resolve(__dirname, './src/public')
-      }], { ignore: ['*.html'] })
-    );
-  }
-
-  config.devServer = {
-    contentBase: './src/public',
-    stats: 'minimal'
-  };
-
-  return config;
-}());
-
+  ]
+};
