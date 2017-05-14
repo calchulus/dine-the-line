@@ -1,7 +1,7 @@
 <div class="stations">
     <h2>CTA Stations</h2>
 
-    <label>
+    <label ng-if="$ctrl.selectedStation === null">
         Pick a station:
         <input ng-model="$ctrl.userStation" value="$ctrl.userStation" />
     </label>

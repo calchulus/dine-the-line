@@ -39,7 +39,6 @@ button {
     background: $background-primary;
     border: 2px solid #ccc;
     color: $font-color-primary;
-    margin: $spacing-sibling;
 
     &:hover,
     &:focus {
@@ -55,10 +54,12 @@ button {
 }
 
 .card-grid {
+
   display: flex;
   flex-wrap: wrap;
 
   .card {
-    flex: 0 0 33%;
+    flex: 0 0 calc(33% - #{$spacing-sibling});
+    margin: $spacing-sibling/2;
   }
 }
