@@ -9,6 +9,7 @@ class StationsController {
     this.$scope = $scope;
 
     this.stations = [];
+    this.selectedStation = null;
 
     this.reset = function() {
       $scope.selectedStation = null;
