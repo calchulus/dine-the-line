@@ -2,10 +2,14 @@
     <h2>CTA Stations</h2>
     <div>
         <span>Found in {{ $ctrl.name }}.html</span>
-        <p>{{$ctrl}}</p>
 
-        <hr />
+        <ul>
+            <li ng-class="station-card" ng-repeat="station in $ctrl.stations">
+                <h3>{{station.name}}</h3>
+                <span ng-if="station.accessible" class="material-icons">accessible</span>
+            </li>
+        </ul>
 
-        {{$ctrl.stations}}
+
     </div>
 </div>
