@@ -1,10 +1,10 @@
 import angular from 'angular';
 import stationsComponent from './stations.component';
-import stationFactory from './station.factory';
+import stationsFactory from './stations.factory';
 
 let stationsModule = angular.module('stations', [])
   .component('stations', stationsComponent)
-  .factory('stationFactory', stationFactory)
+  .factory('stationsFactory', stationsFactory)
   .name;
 
 export default stationsModule;

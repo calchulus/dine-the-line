@@ -1,4 +1,4 @@
-let StationFactory = function($http) {
+let StationsFactory = function($http) {
 
   return {
     getStations: getStations
@@ -19,6 +19,6 @@ let StationFactory = function($http) {
   }
 };
 
-StationFactory.$inject = ['$http'];
+StationsFactory.$inject = ['$http'];
 
-export default StationFactory;
+export default StationsFactory;

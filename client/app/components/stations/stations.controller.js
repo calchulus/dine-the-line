@@ -1,7 +1,7 @@
 
 class StationsController {
 
-  constructor($scope, stationFactory) {
+  constructor($scope, stationsFactory) {
 
     'ngInject';
 
@@ -17,7 +17,7 @@ class StationsController {
     };
 
     this.$onInit = function () {
-      stationFactory
+      stationsFactory
         .getStations()
         .then(result => this.stations = result);
     }
@@ -26,6 +26,6 @@ class StationsController {
 
 }
 
-StationsController.$inject = ['$scope','stationFactory'];
+StationsController.$inject = ['$scope','stationsFactory'];
 
 export default StationsController;

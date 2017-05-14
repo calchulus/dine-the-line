@@ -3,18 +3,19 @@
 
     <label>
         Pick a station:
-        <input ng-model="userStation" />
+        <input ng-model="$ctrl.userStation" value="$ctrl.userStation" />
     </label>
 
-    <ul ng-if="userStation && $ctrl.selectedStation === null">
-        <li ng-class="station-card" ng-repeat="station in $ctrl.stations | filter: userStation" ng-click="$ctrl.selectedStation = station">
+    <div class="card-grid" ng-if="$ctrl.userStation && $ctrl.selectedStation === null">
+        <button class="card button-card" ng-repeat="station in $ctrl.stations | filter: $ctrl.userStation" ng-click="$ctrl.selectedStation = station">
             <h3>{{station.name}}</h3>
             <span ng-if="station.accessible" class="material-icons">accessible</span>
-        </li>
-    </ul>
+        </button>
+    </div>
 
     <div ng-if="$ctrl.selectedStation">
         <h3>You Selected: {{$ctrl.selectedStation.name}}</h3>
+        <button ng-click="$ctrl.selectedStation = null; $ctrl.userStation = ''">Start Over</button>
     </div>
 
 </div>
