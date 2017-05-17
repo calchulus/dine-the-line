@@ -7,7 +7,7 @@
     </label>
 
     <div class="card-grid" ng-if="$ctrl.userStation && $ctrl.selectedStation === null">
-        <button class="card button-card" ng-repeat="station in $ctrl.stations | filter: $ctrl.userStation" ng-click="$ctrl.selectedStation = station">
+        <button class="card" ng-repeat="station in $ctrl.stations | filter: $ctrl.userStation" ng-click="$ctrl.selectedStation = station">
             <h3>{{station.name}}</h3>
             <span ng-if="station.accessible" class="material-icons">accessible</span>
         </button>
